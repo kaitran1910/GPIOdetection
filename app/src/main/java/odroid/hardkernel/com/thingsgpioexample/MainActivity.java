@@ -1,9 +1,11 @@
 package odroid.hardkernel.com.thingsgpioexample;
 
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Switch;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.things.pio.PeripheralManager;
 import com.google.android.things.pio.Gpio;
@@ -15,6 +17,8 @@ public class MainActivity extends AppCompatActivity {
 
     PeripheralManager manager;
     Gpio gpio;
+    Boolean state = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,27 +37,26 @@ public class MainActivity extends AppCompatActivity {
             gpio = manager.openGpio(gpioList.get(0));
 
             // set the pin's direction and initial state.
-            gpio.setDirection(Gpio.DIRECTION_OUT_INITIALLY_LOW);
-            Switch gpioSwitch = findViewById(R.id.gpio_switch);
+            gpio.setEdgeTriggerType(Gpio.EDGE_BOTH);
 
-            gpioSwitch.setOnClickListener(new View.OnClickListener() {
+            Button gpioButton = findViewById(R.id.gpio_status_check);
+            gpioButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     try {
-                        Switch gpioSwitch = (Switch) v;
-                        if (gpioSwitch.isChecked()) {
-                            // set pin #7 to high, or 1.
-                            gpio.setValue(true);
+                        Button gpioButton = (Button) v;
+                        if (gpio.getValue()) {
+                            Toast.makeText(MainActivity.this, "GPIO is on", Toast.LENGTH_SHORT).show();
                         } else {
-                            // set pin #7 to low, or 0.
-                            gpio.setValue(false);
+                            Toast.makeText(MainActivity.this, "GPIO is off", Toast.LENGTH_SHORT).show();
                         }
                     } catch (IOException io) {
                         io.printStackTrace();
                     }
                 }
             });
-        } catch (Exception exception) {
+        } catch (
+                Exception exception) {
             exception.printStackTrace();
         }
     }

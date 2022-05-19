@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">thingsGpioExample</string>
     <string name="gpio_switch">Gpio Switch</string>
+    <string name="gpio_status_check">GPIO status check</string>
 </resources>
