@@ -1,6 +1,5 @@
 package odroid.hardkernel.com.thingsgpioexample;
 
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -33,10 +32,10 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             // get first available gpio pin.
-            // in this case, Physical pin #7 is used.
-            gpio = manager.openGpio(gpioList.get(0));
+            // in this case, Physical pin #18 is used.
+            gpio = manager.openGpio("18");
 
-            // set the pin's direction and initial state.
+            // Sets the interrupt trigger type.
             gpio.setEdgeTriggerType(Gpio.EDGE_BOTH);
 
             Button gpioButton = findViewById(R.id.gpio_status_check);
